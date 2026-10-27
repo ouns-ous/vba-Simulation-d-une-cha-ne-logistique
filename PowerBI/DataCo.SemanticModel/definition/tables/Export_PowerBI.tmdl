@@ -1,0 +1,67 @@
+table Export_PowerBI
+	lineageTag: 4f644b27-b9c0-4225-95a3-51976516fd8d
+
+	column CodeScenario
+		dataType: int64
+		formatString: #,##0
+		lineageTag: dbeaeaf4-4a94-4cb1-a746-6f9827b3de4d
+		summarizeBy: none
+		sourceColumn: CodeScenario
+
+	column Jour
+		dataType: int64
+		formatString: #,##0
+		lineageTag: d8dd019c-6fbe-44b3-8ca2-5c4f79dceac9
+		summarizeBy: none
+		sourceColumn: Jour
+
+	column Demande
+		dataType: int64
+		formatString: #,##0
+		lineageTag: b299164c-4410-4901-ac8f-e02e14b9bd7e
+		summarizeBy: none
+		sourceColumn: Demande
+
+	column StockFinJournee
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 92cbb2fe-b4ea-4329-839d-d4bf4064a834
+		summarizeBy: none
+		sourceColumn: StockFinJournee
+
+	column Ventes
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 3f466179-f00f-4560-9f0b-1edef134e270
+		summarizeBy: none
+		sourceColumn: Ventes
+
+	column Rupture
+		dataType: int64
+		formatString: #,##0
+		lineageTag: b3f264e7-9c3a-4e85-8aa4-daf692041619
+		summarizeBy: none
+		sourceColumn: Rupture
+
+	column CommandePassee
+		dataType: int64
+		formatString: #,##0
+		lineageTag: d78a43f5-b2e2-49b7-9a5b-285016c9d025
+		summarizeBy: none
+		sourceColumn: CommandePassee
+
+	partition Export_PowerBI = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/Export_PowerBI.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "CodeScenario") <> "" and Record.Field(_, "CodeScenario") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"CodeScenario", Int64.Type}, {"Jour", Int64.Type}, {"Demande", Int64.Type}, {"StockFinJournee", Int64.Type}, {"Ventes", Int64.Type}, {"Rupture", Int64.Type}, {"CommandePassee", Int64.Type}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

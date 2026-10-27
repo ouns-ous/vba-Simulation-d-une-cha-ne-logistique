@@ -1,0 +1,4 @@
+﻿"Code","Nom","DelaiPrevu","CoutTransport","DelaiReelObserve","TauxRetardObserve","ModeTransport"
+"F001","Global Sport Supply","4","12","4.01040027369141","0.382073212452959","Standard Class"
+"F002","FastTrack Logistics","2","22","4.00020794343938","0.77063838635891","Second Class"
+"F003","Express Air Cargo","0.734433","35","1.59300726772736","0.821646042034964","First Class / Same Day"

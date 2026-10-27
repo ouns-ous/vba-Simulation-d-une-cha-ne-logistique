@@ -1,0 +1,66 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/report/3.3.0/schema.json",
+  "themeCollection": {
+    "baseTheme": {
+      "name": "CY24SU06",
+      "reportVersionAtImport": {
+        "visual": "1.8.0",
+        "page": "1.3.0",
+        "report": "2.0.0"
+      },
+      "type": "SharedResources"
+    },
+    "customTheme": {
+      "name": "DataCoGlobal-cf3d8bc0.json",
+      "reportVersionAtImport": {
+        "visual": "1.8.0",
+        "report": "2.0.0",
+        "page": "1.3.0"
+      },
+      "type": "RegisteredResources"
+    }
+  },
+  "objects": {
+    "outspacePane": [
+      {
+        "properties": {
+          "expanded": {
+            "expr": {
+              "Literal": {
+                "Value": "false"
+              }
+            }
+          }
+        }
+      }
+    ]
+  },
+  "resourcePackages": [
+    {
+      "name": "SharedResources",
+      "type": "SharedResources",
+      "items": [
+        {
+          "name": "CY24SU06",
+          "path": "BaseThemes/CY24SU06.json",
+          "type": "BaseTheme"
+        }
+      ]
+    },
+    {
+      "name": "RegisteredResources",
+      "type": "RegisteredResources",
+      "items": [
+        {
+          "name": "DataCoGlobal-cf3d8bc0.json",
+          "path": "DataCoGlobal-cf3d8bc0.json",
+          "type": "CustomTheme"
+        }
+      ]
+    }
+  ],
+  "settings": {
+    "useStylableVisualContainerHeader": true,
+    "useEnhancedTooltips": false
+  }
+}

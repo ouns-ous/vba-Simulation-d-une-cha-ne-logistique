@@ -1,0 +1,134 @@
+table T_Commandes
+	lineageTag: f1bbe9a0-1755-4ea6-9deb-9b0c1845c047
+
+	column ID
+		dataType: string
+		lineageTag: 20b7639f-74eb-4ab9-b7b5-a1038030e0c0
+		summarizeBy: none
+		sourceColumn: ID
+
+	column Date
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 454c6d39-7c65-40f3-a378-3a9a6a1455dc
+		summarizeBy: none
+		sourceColumn: Date
+
+	column Client
+		dataType: string
+		lineageTag: 9a58f405-e5be-4c23-9fe1-0519860eeb9f
+		summarizeBy: none
+		sourceColumn: Client
+
+	column Produit
+		dataType: string
+		lineageTag: 1627e20e-75ab-4ef5-8d08-5d9a0590bdc7
+		summarizeBy: none
+		sourceColumn: Produit
+
+	column Quantite
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 1a21e350-5ec1-4d76-a1cb-ae8122fe89f2
+		summarizeBy: none
+		sourceColumn: Quantite
+
+	column Ventes
+		dataType: int64
+		formatString: #,##0
+		lineageTag: f09b25a3-6e8c-4242-9456-95b76c4feb5a
+		summarizeBy: none
+		sourceColumn: Ventes
+
+	column Rupture
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 2142cc0d-3d1e-45f7-b272-66bf912c980f
+		summarizeBy: none
+		sourceColumn: Rupture
+
+	column Statut
+		dataType: string
+		lineageTag: 9ab27061-88bc-4f5f-8575-fb4df091c198
+		summarizeBy: none
+		sourceColumn: Statut
+
+	column Origine
+		dataType: string
+		lineageTag: 99f51ad9-02e2-4213-a2a9-1ffef5918de8
+		summarizeBy: none
+		sourceColumn: Origine
+
+	column Fournisseur
+		dataType: string
+		lineageTag: 3953a539-537c-4f5a-9576-ecccc06bdde8
+		summarizeBy: none
+		sourceColumn: Fournisseur
+
+	column DelaiPrevu
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: dca105ba-c4ab-4138-9355-6600ca8f609e
+		summarizeBy: none
+		sourceColumn: DelaiPrevu
+
+	column DelaiReel
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 98d6dfc9-16b4-4692-8b30-261c890b1c53
+		summarizeBy: none
+		sourceColumn: DelaiReel
+
+	column StatutLivraison
+		dataType: string
+		lineageTag: 2d0474ef-e5df-4151-b784-fbb6ec50c6c2
+		summarizeBy: none
+		sourceColumn: StatutLivraison
+
+	column CoutTransport
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 39362d5b-759f-43b1-8e69-0446436d3e49
+		summarizeBy: none
+		sourceColumn: CoutTransport
+
+	column Marge
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 4c4c2dcb-d455-474c-81e6-94e5d1341820
+		summarizeBy: none
+		sourceColumn: Marge
+
+	column Segment
+		dataType: string
+		lineageTag: f197cfd6-78d3-4e45-8933-bb819b1d9b60
+		summarizeBy: none
+		sourceColumn: Segment
+
+	column ModeTransport
+		dataType: string
+		lineageTag: 7c0afc2a-c503-47ed-a5d2-e430b3d2f8f6
+		summarizeBy: none
+		sourceColumn: ModeTransport
+
+	column IDSource
+		dataType: string
+		lineageTag: ff1bf390-526f-41d7-843c-8dd56ed1e845
+		summarizeBy: none
+		sourceColumn: IDSource
+
+	partition T_Commandes = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/T_Commandes.csv"), [Delimiter=",", Columns=18, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "ID") <> "" and Record.Field(_, "ID") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"ID", type text}, {"Date", type datetime}, {"Client", type text}, {"Produit", type text}, {"Quantite", Int64.Type}, {"Ventes", Int64.Type}, {"Rupture", Int64.Type}, {"Statut", type text}, {"Origine", type text}, {"Fournisseur", type text}, {"DelaiPrevu", type number}, {"DelaiReel", type number}, {"StatutLivraison", type text}, {"CoutTransport", type number}, {"Marge", type number}, {"Segment", type text}, {"ModeTransport", type text}, {"IDSource", type text}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

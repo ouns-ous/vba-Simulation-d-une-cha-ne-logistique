@@ -1,0 +1,64 @@
+table T_Fournisseurs
+	lineageTag: 565a7f58-66bc-4fda-81a1-9c46b7e2ab3e
+
+	column Code
+		dataType: string
+		lineageTag: 1df0882d-3ffe-4fb8-9d3c-72510b8eb5f1
+		summarizeBy: none
+		sourceColumn: Code
+
+	column Nom
+		dataType: string
+		lineageTag: 98f4086d-d0d9-495b-bae3-bda5ec8e2352
+		summarizeBy: none
+		sourceColumn: Nom
+
+	column DelaiPrevu
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: b4d26514-1e6e-4af3-8b71-776fc6817692
+		summarizeBy: none
+		sourceColumn: DelaiPrevu
+
+	column CoutTransport
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 23058c7e-72da-43aa-953a-3086afea4e9f
+		summarizeBy: none
+		sourceColumn: CoutTransport
+
+	column DelaiReelObserve
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 5ddc936f-91f2-408d-9cc3-ce13adca3c1e
+		summarizeBy: none
+		sourceColumn: DelaiReelObserve
+
+	column TauxRetardObserve
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 97aa384e-0038-4b9f-b10e-2d9c00e08fb9
+		summarizeBy: none
+		sourceColumn: TauxRetardObserve
+
+	column ModeTransport
+		dataType: string
+		lineageTag: 47fc69ca-3375-4b2e-a43f-2a332d2bf602
+		summarizeBy: none
+		sourceColumn: ModeTransport
+
+	partition T_Fournisseurs = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/T_Fournisseurs.csv"), [Delimiter=",", Columns=7, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "Code") <> "" and Record.Field(_, "Code") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"Code", type text}, {"Nom", type text}, {"DelaiPrevu", type number}, {"CoutTransport", type number}, {"DelaiReelObserve", type number}, {"TauxRetardObserve", type number}, {"ModeTransport", type text}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

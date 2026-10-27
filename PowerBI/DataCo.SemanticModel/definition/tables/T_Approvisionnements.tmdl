@@ -1,0 +1,70 @@
+table T_Approvisionnements
+	lineageTag: 51a36993-9e01-4430-8547-df9de4194614
+
+	column ID
+		dataType: string
+		lineageTag: 2eaf410f-7892-46df-bbef-0f9a8e4642e5
+		summarizeBy: none
+		sourceColumn: ID
+
+	column DateCommande
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 2eabc48e-c55f-4029-afa4-38941ae17a28
+		summarizeBy: none
+		sourceColumn: DateCommande
+
+	column Fournisseur
+		dataType: string
+		lineageTag: 3e5b0edd-09bb-4bba-86da-6de0cb8e4f97
+		summarizeBy: none
+		sourceColumn: Fournisseur
+
+	column Produit
+		dataType: string
+		lineageTag: 7e115447-d454-4c24-bcab-fde43df1c17e
+		summarizeBy: none
+		sourceColumn: Produit
+
+	column Quantite
+		dataType: int64
+		formatString: #,##0
+		lineageTag: c95f0157-b541-47be-82c2-dbec9b1cf597
+		summarizeBy: none
+		sourceColumn: Quantite
+
+	column DatePrevue
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 7d611f9e-2c95-4c01-8245-f8e6b4f59085
+		summarizeBy: none
+		sourceColumn: DatePrevue
+
+	column DateReception
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 832fbb0f-a851-4480-abc8-1599c8217d4b
+		summarizeBy: none
+		sourceColumn: DateReception
+
+	column Statut
+		dataType: string
+		lineageTag: 4e263a57-c621-4028-853e-4ee7b7056598
+		summarizeBy: none
+		sourceColumn: Statut
+
+	partition T_Approvisionnements = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/T_Approvisionnements.csv"), [Delimiter=",", Columns=8, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "ID") <> "" and Record.Field(_, "ID") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"ID", type text}, {"DateCommande", type datetime}, {"Fournisseur", type text}, {"Produit", type text}, {"Quantite", Int64.Type}, {"DatePrevue", type datetime}, {"DateReception", type datetime}, {"Statut", type text}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

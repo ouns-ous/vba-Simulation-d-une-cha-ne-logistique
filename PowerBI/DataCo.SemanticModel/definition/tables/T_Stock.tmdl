@@ -1,0 +1,44 @@
+table T_Stock
+	lineageTag: df17ba39-dc9d-4730-a928-87d761a03609
+
+	column Produit
+		dataType: string
+		lineageTag: a573081d-bba1-490a-85bb-45ed7bea3fe6
+		summarizeBy: none
+		sourceColumn: Produit
+
+	column StockCourant
+		dataType: int64
+		formatString: #,##0
+		lineageTag: e03e3bde-3ec7-45d2-86b9-49dc062a33db
+		summarizeBy: none
+		sourceColumn: StockCourant
+
+	column SeuilAlerte
+		dataType: int64
+		formatString: #,##0
+		lineageTag: cd49962a-05e2-4971-897d-918137c149a2
+		summarizeBy: none
+		sourceColumn: SeuilAlerte
+
+	column Etat
+		dataType: string
+		lineageTag: 5187f678-0d80-4a4a-b6b5-be487751e0c0
+		summarizeBy: none
+		sourceColumn: Etat
+
+	partition T_Stock = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/T_Stock.csv"), [Delimiter=",", Columns=4, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "Produit") <> "" and Record.Field(_, "Produit") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"Produit", type text}, {"StockCourant", Int64.Type}, {"SeuilAlerte", Int64.Type}, {"Etat", type text}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

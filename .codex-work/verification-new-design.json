@@ -1,0 +1,9 @@
+{
+  "result": "Layout: OK\r\nPage 0: Accueil OK\r\nPage 1: Produits OK\r\nPage 2: Fournisseurs OK\r\nPage 3: Commandes OK\r\nPage 4: Appro. OK\r\nPage 5: Stocks OK\r\nPage 6: Parametres OK\r\nPage 7: Simulation OK\r\nPage 8: Resultats OK\r\nPage 9: Export / Aide OK\r\nPage 10: Rapports OK\r\nProduct: 4 choices, aligned\r\nZoom +/-/100%/Fit: OK (75%)\r\nCommandes historiques: 87,094\r\nProduits: 4\r\nFournisseurs: 3\r\nProduits sous seuil: 0\r\nAppro. en attente: 0\r\n",
+  "backup": "C:\\Users\\HP\\Desktop\\DataCo_Projet\\.codex-work\\DataCo_avant_nouveau_design_20261022_211633.xlsm",
+  "tables_and_parameters_unchanged": true,
+  "domain_procedures_unchanged": true,
+  "unrelated_modules_unchanged": true,
+  "command_button_events": "Navigation and zoom CommandButton events: OK",
+  "visual_capture": "Unavailable: Windows capture timed out; runtime geometry and accessibility inspected."
+}

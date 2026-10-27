@@ -1,0 +1,39 @@
+table Simulation_Contexte
+	lineageTag: 1b3e5be0-8f62-423a-8c57-a740b71c7c21
+
+	measure 'Produit simule' = VAR Code = SELECTEDVALUE(Simulation_Contexte[CodeProduit]) VAR Libelle = SELECTEDVALUE(Simulation_Contexte[Designation]) RETURN IF(ISBLANK(Code), "Produit : a actualiser", "Produit : " & Code & " · " & Libelle)
+		lineageTag: 27f3cc43-dad0-4b85-9aad-93b7dcd48e48
+
+	column CodeProduit
+		dataType: string
+		lineageTag: 4c1d6f50-6848-4594-83e0-bd1eec2042de
+		summarizeBy: none
+		sourceColumn: CodeProduit
+
+	column Designation
+		dataType: string
+		lineageTag: 742beed0-96b5-4bce-9c97-6aa25020aa81
+		summarizeBy: none
+		sourceColumn: Designation
+
+	column DateSimulation
+		dataType: dateTime
+		formatString: dd/MM/yyyy HH:mm
+		lineageTag: fcf42fa6-ff6d-4e7c-81cb-3e805e2c2ae1
+		summarizeBy: none
+		sourceColumn: DateSimulation
+
+	partition Simulation_Contexte = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/Simulation_Contexte.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "CodeProduit") <> "" and Record.Field(_, "CodeProduit") <> null),
+				    Typed = Table.TransformColumnTypes(NonEmpty, {{"CodeProduit", type text}, {"Designation", type text}, {"DateSimulation", type datetime}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,5 @@
+expression FolderExports = "C:/Users/HP/Desktop/DataCo_Projet/exports" meta [IsParameterQuery=true, Type="Text", IsParameterQueryRequired=true]
+	lineageTag: 997ca93d-9a86-430c-8bc7-f68f45c07340
+
+	annotation PBI_ResultType = Text
+

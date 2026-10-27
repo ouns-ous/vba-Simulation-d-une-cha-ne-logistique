@@ -1,0 +1,28 @@
+model Model
+	culture: fr-FR
+	defaultPowerBIDataSourceVersion: powerBI_V3
+	sourceQueryCulture: en-US
+	dataAccessOptions
+		legacyRedirects
+		returnErrorValuesAsNull
+
+annotation PBI_QueryOrder = ["Scenarios","Export_PowerBI","Export_KPI","Export_Sensibilite","Export_Stats","Export_Apparie","Export_Decision","Simulation_Contexte","T_Produits","T_Fournisseurs","T_Commandes","T_Stock","T_Approvisionnements","FolderExports"]
+
+annotation PBI_ProTooling = ["DevMode"]
+
+ref table Scenarios
+ref table Export_PowerBI
+ref table Export_KPI
+ref table Export_Sensibilite
+ref table Export_Stats
+ref table Export_Apparie
+ref table Export_Decision
+ref table T_Produits
+ref table T_Fournisseurs
+ref table T_Commandes
+ref table T_Stock
+ref table T_Approvisionnements
+ref table Simulation_Contexte
+
+ref cultureInfo fr-FR
+

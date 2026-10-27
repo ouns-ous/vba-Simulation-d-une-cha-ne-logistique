@@ -1,0 +1,102 @@
+table Export_Stats
+	lineageTag: 29584fc6-d80d-4edb-87b4-442f89945c36
+
+	column CodeScenario
+		dataType: int64
+		formatString: #,##0
+		lineageTag: dc599dff-26d8-48de-8264-57f4de956503
+		summarizeBy: none
+		sourceColumn: CodeScenario
+
+	column CoutMoyen
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: ec141df0-c0b2-4e2e-ae97-16772c6881fe
+		summarizeBy: none
+		sourceColumn: CoutMoyen
+
+	column CoutEcartType
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: eb4ab488-1122-4064-a9a5-f5f268a0d797
+		summarizeBy: none
+		sourceColumn: CoutEcartType
+
+	column CoutICBas
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: f6275c18-badc-4eaa-a717-9fe19b59bf1f
+		summarizeBy: none
+		sourceColumn: CoutICBas
+
+	column CoutICHaut
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 59fe5be4-7f53-4643-8775-4fa327e34ca9
+		summarizeBy: none
+		sourceColumn: CoutICHaut
+
+	column ServiceMoyen
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 4b648789-d8e7-4ce6-95e3-3d807ba85054
+		summarizeBy: none
+		sourceColumn: ServiceMoyen
+
+	column ServiceEcartType
+		dataType: double
+		formatString: 0.00%
+		lineageTag: bad2fe8a-d91e-4241-b50a-fd77d6ac0e8e
+		summarizeBy: none
+		sourceColumn: ServiceEcartType
+
+	column ServiceICBas
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 639537b8-4bcd-4660-af08-89e3f1b86236
+		summarizeBy: none
+		sourceColumn: ServiceICBas
+
+	column ServiceICHaut
+		dataType: double
+		formatString: 0.00%
+		lineageTag: fa1bbd08-6c88-42b7-bda4-096b23b10770
+		summarizeBy: none
+		sourceColumn: ServiceICHaut
+
+	column RupturesMoyennes
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 245d8d79-8564-4981-8e7b-8fb1d96b2b4d
+		summarizeBy: none
+		sourceColumn: RupturesMoyennes
+
+	column CommandesMoyennes
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 2e3eb4f7-29f1-4f4a-8ba1-1174e68ebbc9
+		summarizeBy: none
+		sourceColumn: CommandesMoyennes
+
+	column StockMoyen
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: dd3aa4c8-bd34-482c-b2d9-9c15df7df470
+		summarizeBy: none
+		sourceColumn: StockMoyen
+
+	partition Export_Stats = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/Export_Stats.csv"), [Delimiter=",", Columns=12, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "CodeScenario") <> "" and Record.Field(_, "CodeScenario") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"CodeScenario", Int64.Type}, {"CoutMoyen", type number}, {"CoutEcartType", type number}, {"CoutICBas", type number}, {"CoutICHaut", type number}, {"ServiceMoyen", type number}, {"ServiceEcartType", type number}, {"ServiceICBas", type number}, {"ServiceICHaut", type number}, {"RupturesMoyennes", type number}, {"CommandesMoyennes", type number}, {"StockMoyen", type number}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

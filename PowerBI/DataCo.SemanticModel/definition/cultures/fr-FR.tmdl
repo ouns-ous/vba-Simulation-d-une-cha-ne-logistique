@@ -1,0 +1,137 @@
+cultureInfo fr-FR
+
+	linguisticMetadata =
+			{
+			  "Version": "2.0.0",
+			  "Language": "en-US",
+			  "Entities": {
+			    "export_apparie.differencemoyenne": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Export_Apparie",
+			          "ConceptualProperty": "DifferenceMoyenne"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Difference": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "export_apparie.icbas": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Export_Apparie",
+			          "ConceptualProperty": "ICBas"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "IC bas": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "export_apparie.ichaut": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Export_Apparie",
+			          "ConceptualProperty": "ICHaut"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "IC haut": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "export_apparie.scenarioa": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Export_Apparie",
+			          "ConceptualProperty": "ScenarioA"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "A": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "export_apparie.scenariob": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Export_Apparie",
+			          "ConceptualProperty": "ScenarioB"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "B": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    },
+			    "export_sensibilite.commandesmultiples": {
+			      "Definition": {
+			        "Binding": {
+			          "ConceptualEntity": "Export_Sensibilite",
+			          "ConceptualProperty": "CommandesMultiples"
+			        }
+			      },
+			      "State": "Generated",
+			      "Terms": [
+			        {
+			          "Multiples": {
+			            "State": "Suggested",
+			            "Source": {
+			              "Type": "External",
+			              "Agent": "PowerBI.VisualColumnRename"
+			            },
+			            "Weight": 0.9
+			          }
+			        }
+			      ]
+			    }
+			  }
+			}
+		contentType: json
+

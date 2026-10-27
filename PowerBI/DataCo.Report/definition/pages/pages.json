@@ -1,0 +1,10 @@
+{
+  "$schema": "https://developer.microsoft.com/json-schemas/fabric/item/report/definition/pagesMetadata/1.1.0/schema.json",
+  "pageOrder": [
+    "01_ensemble",
+    "02_stock",
+    "03_comparaison",
+    "04_couts_fiabilite"
+  ],
+  "activePageName": "01_ensemble"
+}

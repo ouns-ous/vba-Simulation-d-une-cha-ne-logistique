@@ -1,0 +1,37 @@
+table T_Produits
+	lineageTag: a3ba76af-c97a-4dce-9c1a-c0a4e792baf4
+
+	column Reference
+		dataType: string
+		lineageTag: aa521ed6-7132-43f5-8377-ba254da8b393
+		summarizeBy: none
+		sourceColumn: Reference
+
+	column Designation
+		dataType: string
+		lineageTag: c85c26da-5b71-4518-a510-81995f2ac690
+		summarizeBy: none
+		sourceColumn: Designation
+
+	column PrixUnitaire
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: af6117b1-a54c-4e3d-8a37-55ef27c55016
+		summarizeBy: none
+		sourceColumn: PrixUnitaire
+
+	partition T_Produits = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/T_Produits.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "Reference") <> "" and Record.Field(_, "Reference") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"Reference", type text}, {"Designation", type text}, {"PrixUnitaire", type number}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

@@ -1,0 +1,36 @@
+relationship d747b855-ed03-4a9f-9192-e8f80cbefc08
+	fromColumn: Export_PowerBI.CodeScenario
+	toColumn: Scenarios.CodeScenario
+
+relationship d481a44c-6783-4af6-a878-52dbbf475108
+	fromColumn: Export_KPI.CodeScenario
+	toColumn: Scenarios.CodeScenario
+
+relationship ae23f540-9823-4646-b025-3aa1e2b887db
+	fromColumn: Export_Sensibilite.CodeScenario
+	toColumn: Scenarios.CodeScenario
+
+relationship 7789875d-dfb1-4253-b9c0-a26d7cc9304e
+	fromColumn: Export_Stats.CodeScenario
+	toColumn: Scenarios.CodeScenario
+
+relationship d1c1860c-5bf3-4d5d-9118-bb92a580ff33
+	fromColumn: T_Commandes.Produit
+	toColumn: T_Produits.Reference
+
+relationship 5019fb84-cb0e-430f-b3fe-cc09a4fda4b9
+	fromColumn: T_Commandes.Fournisseur
+	toColumn: T_Fournisseurs.Code
+
+relationship ef2e79ad-35f9-4dbd-aedd-4c90bb0f55fc
+	fromColumn: T_Stock.Produit
+	toColumn: T_Produits.Reference
+
+relationship 1d610e3f-4298-4a49-8298-1a8d4028564a
+	fromColumn: T_Approvisionnements.Produit
+	toColumn: T_Produits.Reference
+
+relationship 84f234c5-6404-4458-be00-4fc15fb8f245
+	fromColumn: T_Approvisionnements.Fournisseur
+	toColumn: T_Fournisseurs.Code
+

@@ -1,0 +1,1 @@
+PASS: 4 selecteurs, rechargement, valeurs manuelles, recalibration, evenements feuille, S0 commun, bornes 0/1, couts nuls et capacite.

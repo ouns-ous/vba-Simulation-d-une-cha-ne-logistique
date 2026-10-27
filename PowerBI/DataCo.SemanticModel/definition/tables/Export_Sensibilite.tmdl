@@ -1,0 +1,80 @@
+table Export_Sensibilite
+	lineageTag: 311a9565-2856-4212-9ddb-ad6217110f52
+
+	column CodeScenario
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 7d4cd531-3a3b-41a4-bdd5-2c7264b1aada
+		summarizeBy: none
+		sourceColumn: CodeScenario
+
+	column Run
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 348b6c76-ca09-4c7e-83b2-ce290d27c1c6
+		summarizeBy: none
+		sourceColumn: Run
+
+	column CommandesMultiples
+		dataType: string
+		lineageTag: 135a0466-0cf5-4f52-beba-310d6707a8c5
+		summarizeBy: none
+		sourceColumn: CommandesMultiples
+
+	column CoutTotal
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 161039d4-f9d0-4e73-9212-9a6332faa219
+		summarizeBy: none
+		sourceColumn: CoutTotal
+
+	column TauxService
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 7eb1e66e-15f9-4db4-9199-f81eadd8f1ed
+		summarizeBy: none
+		sourceColumn: TauxService
+
+	column TauxRupture
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 9adc57ac-e84a-495e-bf9b-f72b26bf965d
+		summarizeBy: none
+		sourceColumn: TauxRupture
+
+	column NbCommandes
+		dataType: int64
+		formatString: #,##0
+		lineageTag: b1264dca-b670-4847-aee0-364a66eb253e
+		summarizeBy: none
+		sourceColumn: NbCommandes
+
+	column StockMoyen
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: 3ad4ff6f-b9c2-4a08-9b9a-9a1e358e76cb
+		summarizeBy: none
+		sourceColumn: StockMoyen
+
+	column UnitesRupture
+		dataType: int64
+		formatString: #,##0
+		lineageTag: c028f20f-fd1c-45d0-a863-98deb53bd3de
+		summarizeBy: none
+		sourceColumn: UnitesRupture
+
+	partition Export_Sensibilite = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/Export_Sensibilite.csv"), [Delimiter=",", Columns=9, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "CodeScenario") <> "" and Record.Field(_, "CodeScenario") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"CodeScenario", Int64.Type}, {"Run", Int64.Type}, {"CommandesMultiples", type text}, {"CoutTotal", type number}, {"TauxService", type number}, {"TauxRupture", type number}, {"NbCommandes", Int64.Type}, {"StockMoyen", type number}, {"UnitesRupture", Int64.Type}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

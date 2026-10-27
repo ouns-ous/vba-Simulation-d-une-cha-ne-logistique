@@ -1,0 +1,38 @@
+table Export_Decision
+	lineageTag: 24fb582a-3977-45f9-a3fb-418d107ac7ca
+
+	column Decision
+		dataType: string
+		lineageTag: 4190eb24-5fe4-422b-b504-2697492c7d03
+		summarizeBy: none
+		sourceColumn: Decision
+
+	column SeuilService
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 0924962c-6f8b-4703-95fe-0ad1d398a8b8
+		summarizeBy: none
+		sourceColumn: SeuilService
+
+	column DateCalcul
+		dataType: dateTime
+		formatString: dd/MM/yyyy
+		lineageTag: 3ed6b6f5-8796-419f-86d0-a1d624915061
+		summarizeBy: none
+		sourceColumn: DateCalcul
+
+	partition Export_Decision = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/Export_Decision.csv"), [Delimiter=",", Columns=3, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "Decision") <> "" and Record.Field(_, "Decision") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"Decision", type text}, {"SeuilService", type number}, {"DateCalcul", type datetime}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

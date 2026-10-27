@@ -1,0 +1,122 @@
+{
+  "Date": "2026-10-21",
+  "Workbook": "C:\\Users\\HP\\Desktop\\DataCo_Projet\\DataCo_Logistique.xlsm",
+  "NativeExcel": {
+    "UI": "PASS : comparaison et actualisation depuis classeur masque; mappings stock/ruptures/commandes; report0=3; report1=1095; report2=3; report3=3; report4=6; report5=30; geometrie 11 onglets; rechargement; fermeture et 19 feuilles visibles.",
+    "CRUD": "PASS : CRUD, ventes partielles, annulation, reception unique, references, simulation deterministe, graine, demande nulle, cinq UserForms, dates invalides.",
+    "KPI": "PASS : disponibilite, jours, sequences, couts, couverture, mu nul, alertes et approvisionnements.",
+    "final": "PASS : rapport non vide a l'ouverture, largeur adaptee, retour Menu et aucune erreur de formule.",
+    "powerbi_launch": "PASS : bouton UserForm Power BI execute, exports et source reconfigures."
+  },
+  "Independent": {
+    "Date": "2026-10-21",
+    "IndependentSimulation": "PASS",
+    "KPI_runs": 90,
+    "DailyRows": 1095,
+    "SensitivityRuns": 180,
+    "StatisticsAndPairedCI": "PASS",
+    "Calibration": {
+      "historical": 87094,
+      "RipDeck": 24515,
+      "days": 1006,
+      "mu": 73.25844930417495,
+      "sigma": 16.716804283523995,
+      "Crup": 6.7137500713849105
+    },
+    "DataPreservation": {
+      "T_Commandes": 87094,
+      "T_Fournisseurs": 3,
+      "T_Produits": 4,
+      "T_Stock": 4,
+      "T_Approvisionnements": 0
+    },
+    "PowerBIJsonSchemas": 107,
+    "PowerBINavigationTargets": 36,
+    "Params": {
+      "S0": 500,
+      "s": 260,
+      "Q": 300,
+      "L": 3,
+      "mu": 73.25844930417495,
+      "sigma": 16.716804283523995,
+      "Cpos": 0.03,
+      "Ccmd": 12,
+      "Crup": 6.7137500713849105,
+      "N": 365,
+      "R": 30,
+      "Graine": 20261023,
+      "SeuilService": 0.95,
+      "CommandesMultiples": "Oui",
+      "RapportPowerBI": "PowerBI/DataCo.pbip",
+      "ProduitSimulation": "P001"
+    }
+  },
+  "PowerBI": {
+    "NativeRefresh": "PASS",
+    "DAX": {
+      "Commandes": 87094,
+      "Runs": 90,
+      "Journal": 1095,
+      "Decision": "Equilibre"
+    },
+    "Pages": 6,
+    "NavigationButtons": 36,
+    "FinalVisualAndClicks": "NOT VERIFIED: Windows capture timeout; coordinate input geometry unavailable",
+    "TMDLEncoding": "PASS: all TMDL files UTF-8 without BOM, including expressions.tmdl rewritten by the Excel button.",
+    "FinalModelAfterEncodingFix": "PASS: DataCo opened; native refresh and DAX against the final UTF-8-no-BOM model returned 87094 orders, 90 KPI runs and 1095 daily rows.",
+    "ScenarioDAX": [
+      {
+        "Scenarios[Nom]": "Prudent",
+        "[Cout]": 3891.0655833951996,
+        "[Service]": 0.999967637540453,
+        "[Stock]": 281.7211872146119,
+        "[IC bas]": 3874.4898308367,
+        "[IC haut]": 3907.6413359537
+      },
+      {
+        "Scenarios[Nom]": "Flux tendu",
+        "[Cout]": 4890.197231117017,
+        "[Service]": 0.9880555814392703,
+        "[Stock]": 107.34173515981742,
+        "[IC bas]": 4692.59581872044,
+        "[IC haut]": 5087.79864351359
+      },
+      {
+        "Scenarios[Nom]": "Equilibre",
+        "[Cout]": 3282.0512927826503,
+        "[Service]": 0.9994155039818734,
+        "[Stock]": 193.08611872146113,
+        "[IC bas]": 3236.14252341921,
+        "[IC haut]": 3327.96006214609
+      }
+    ]
+  },
+  "VisualExcelSheets": "PASS: native PDF exports of Menu, Synthese, Evolution_Stock rendered and inspected",
+  "Cleanup": {
+    "Deleted": [
+      {
+        "Path": "C:\\Users\\HP\\Desktop\\DataCo_Projet\\DataCo_Projet",
+        "Bytes": 159661372
+      },
+      {
+        "Path": "C:\\Users\\HP\\Desktop\\DataCo_Projet\\PowerBI\\_backup_report_sidebar_20261020_120254",
+        "Bytes": 152486
+      }
+    ],
+    "BytesRemoved": 159813858,
+    "BackupsRemaining": 0
+  },
+  "Limitations": [
+    "Fichiers sources CSV originaux et maquettes absents du dossier recu.",
+    "Rendu final du formulaire et des pages Power BI, et clics Power BI non certifies par captures."
+  ],
+  "FinalWorkbookSha256": "1c868b7d223abfe91556efff042bc44337727dd2fb93c6242ba0370d243b63ab",
+  "SuggestionsProduits20261022": {
+    "NativeExcel": "PASS: 4 selecteurs, rechargement, valeurs manuelles, recalibration, evenements feuille, S0 commun, bornes 0/1, couts nuls et capacite.",
+    "Independent": "PASS: 4 historiques, 12 couples s/Q, 4 S0, 360 repetitions",
+    "SavedWorkbook": "PASS: P002, S0=415, ACTUEL, aucune erreur de cellule",
+    "Preservation": "PASS: 19 feuilles, six tables transactionnelles identiques",
+    "PowerBI": "Exports CSV actualises pour P002. Actualisation native Power BI non executee.",
+    "WorkbookSha256": "1c868b7d223abfe91556efff042bc44337727dd2fb93c6242ba0370d243b63ab"
+  }
+}

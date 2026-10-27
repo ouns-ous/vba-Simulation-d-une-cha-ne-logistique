@@ -1,0 +1,125 @@
+table Export_KPI
+	lineageTag: e4d45623-1921-4321-a939-f06f2d300ffe
+
+	column CodeScenario
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 62f7b4df-3f3e-4114-8bf2-f92fe8741a17
+		summarizeBy: none
+		sourceColumn: CodeScenario
+
+	column Run
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 97a10005-e686-4e37-8921-2101d8cb2e08
+		summarizeBy: none
+		sourceColumn: Run
+
+	column CoutTotal
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 61ed9c81-320c-4a81-8549-a240da53ddf0
+		summarizeBy: none
+		sourceColumn: CoutTotal
+
+	column TauxService
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 44af96fc-02ef-4e43-b6dc-9d77a63fd7e7
+		summarizeBy: none
+		sourceColumn: TauxService
+
+	column TauxRupture
+		dataType: double
+		formatString: 0.00%
+		lineageTag: 24c88eff-b95d-4008-95c4-927311a9471e
+		summarizeBy: none
+		sourceColumn: TauxRupture
+
+	column NbCommandes
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 765759b2-b451-4083-b127-916fb8a2a275
+		summarizeBy: none
+		sourceColumn: NbCommandes
+
+	column StockMoyen
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: e09ce799-3681-45b1-8cce-299b18d5069f
+		summarizeBy: none
+		sourceColumn: StockMoyen
+
+	column UnitesManquantes
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 970101a4-efa7-41fa-925d-3dc4bfc9bb42
+		summarizeBy: none
+		sourceColumn: UnitesManquantes
+
+	column TauxDispo
+		dataType: double
+		formatString: 0.00%
+		lineageTag: e6a4d375-f46c-4ffa-9027-133458df820d
+		summarizeBy: none
+		sourceColumn: TauxDispo
+
+	column JoursRupture
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 5e121419-9035-4eaa-9b5a-49098d8a1032
+		summarizeBy: none
+		sourceColumn: JoursRupture
+
+	column RuptureMax
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 349d6b1b-fa02-423a-9a82-9590e1b38b32
+		summarizeBy: none
+		sourceColumn: RuptureMax
+
+	column CoutPossession
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 48207e34-ae4a-4e8f-b6e8-9e2ae957e50f
+		summarizeBy: none
+		sourceColumn: CoutPossession
+
+	column CoutCommande
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 80fdf1b9-79c5-401b-94da-c1ed54ed9e49
+		summarizeBy: none
+		sourceColumn: CoutCommande
+
+	column CoutRupture
+		dataType: double
+		formatString: $#,##0.00
+		lineageTag: 5f1cace2-2b0f-4fc8-92c1-8bfeb881c939
+		summarizeBy: none
+		sourceColumn: CoutRupture
+
+	column Couverture
+		dataType: double
+		formatString: #,##0.00
+		lineageTag: d0536543-cb96-49f1-8a8e-ca552b457ef2
+		summarizeBy: none
+		sourceColumn: Couverture
+
+	partition Export_KPI = m
+		mode: import
+		source =
+				let
+				    CsvPath = FolderExports & "/Export_KPI.csv",
+				    CsvSource = Csv.Document(File.Contents(CsvPath), [Delimiter=",", Columns=15, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(CsvSource, [PromoteAllScalars=true]),
+				    ValidRows = Table.SelectRows(Headers, each [CodeScenario] <> null and [CodeScenario] <> ""),
+				    EmptyToNull = Table.ReplaceValue(ValidRows, "", null, Replacer.ReplaceValue, Table.ColumnNames(ValidRows)),
+				    Typed = Table.TransformColumnTypes(EmptyToNull, {{"CodeScenario", Int64.Type}, {"Run", Int64.Type}, {"CoutTotal", type number}, {"TauxService", type number}, {"TauxRupture", type number}, {"NbCommandes", Int64.Type}, {"StockMoyen", type number}, {"UnitesManquantes", Int64.Type}, {"TauxDispo", type number}, {"JoursRupture", Int64.Type}, {"RuptureMax", Int64.Type}, {"CoutPossession", type number}, {"CoutCommande", type number}, {"CoutRupture", type number}, {"Couverture", type number}}, "en-US")
+				in
+				    Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+

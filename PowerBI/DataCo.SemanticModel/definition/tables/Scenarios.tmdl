@@ -1,0 +1,195 @@
+table Scenarios
+	lineageTag: 1bf83eb2-522f-431f-a4ab-c7cc8b4051a9
+
+	measure 'Cout moyen' = AVERAGE(Export_KPI[CoutTotal])
+		formatString: $#,##0.00
+		lineageTag: b706d449-67c0-4e0e-a53f-8a2cf1871f1f
+
+	measure 'Service moyen' = AVERAGE(Export_KPI[TauxService])
+		formatString: 0.00%
+		lineageTag: 680e7f1f-b0d0-4738-89f7-cc01ec5118e1
+
+	measure 'Ruptures moyennes' = AVERAGE(Export_KPI[UnitesManquantes])
+		formatString: #,##0
+		lineageTag: 030a22b3-c601-4fa4-89be-e5ff27069e36
+
+	measure 'Disponibilite journaliere' = AVERAGE(Export_KPI[TauxDispo])
+		formatString: 0.00%
+		lineageTag: 0c8500e7-b02c-42e7-b2b3-1ee5f7a635ad
+
+	measure 'Jours de rupture moyens' = AVERAGE(Export_KPI[JoursRupture])
+		formatString: 0.00
+		lineageTag: a34f8ce7-75b5-4176-a0e2-baf2cacc244a
+
+	measure 'Plus longue rupture moyenne' = AVERAGE(Export_KPI[RuptureMax])
+		formatString: 0.00
+		lineageTag: 22ec3dd1-dd81-4cef-b3fa-c61315b76adf
+
+	measure 'Couverture moyenne' = AVERAGE(Export_KPI[Couverture])
+		formatString: 0.00
+		lineageTag: 2bd93bf3-52e6-430b-bbc6-67510c0eab0b
+
+	measure 'Cout possession moyen' = AVERAGE(Export_KPI[CoutPossession])
+		formatString: $#,##0.00
+		lineageTag: 77beaf4a-d5cd-4ef0-bc7b-52edbf1079b7
+
+	measure 'Cout commande moyen' = AVERAGE(Export_KPI[CoutCommande])
+		formatString: $#,##0.00
+		lineageTag: fe28e0bf-0cd3-4255-a8bc-f5f79d40d282
+
+	measure 'Cout rupture moyen' = AVERAGE(Export_KPI[CoutRupture])
+		formatString: $#,##0.00
+		lineageTag: e176cd28-3490-4ad1-bd40-38d13c9aa5a9
+
+	measure 'Fiabilite du scenario' = VAR Seuil = [Seuil de service] RETURN DIVIDE(COUNTROWS(FILTER(Export_KPI, Export_KPI[TauxService] >= Seuil)), COUNTROWS(Export_KPI))
+		formatString: 0.00%
+		lineageTag: 3ea97028-72b8-45de-9c63-f672b48a954b
+
+	measure 'Commandes moyennes' = AVERAGE(Export_KPI[NbCommandes])
+		formatString: #,##0.0
+		lineageTag: 687925e9-9e45-46b8-8082-657ec7020f94
+
+	measure 'Stock moyen' = AVERAGE(Export_KPI[StockMoyen])
+		formatString: #,##0.0
+		lineageTag: 1dc3a549-30ec-4e4c-801f-16a82ce1eed7
+
+	measure 'Stock quotidien' = SUM(Export_PowerBI[StockFinJournee])
+		formatString: #,##0
+		lineageTag: 16110dab-a0a8-448d-89ac-9250a0ae23ee
+
+	measure 'Demande quotidienne' = SUM(Export_PowerBI[Demande])
+		formatString: #,##0
+		lineageTag: da5cf169-aefe-4180-b402-158515f17436
+
+	measure 'Ruptures quotidiennes' = SUM(Export_PowerBI[Rupture])
+		formatString: #,##0
+		lineageTag: 8a692aea-4953-4b63-b7d6-038cdfe9a59a
+
+	measure 'Decision retenue' = MAX(Export_Decision[Decision])
+		lineageTag: 1dd5de3d-c6c0-424b-b4f8-cf78d3c041f3
+
+	measure 'Seuil de service' = MAX(Export_Decision[SeuilService])
+		formatString: 0.00%
+		lineageTag: 63a4100b-f622-4eb4-9e77-bc544ec04bb0
+
+	measure 'Cout IC bas' = MAX(Export_Stats[CoutICBas])
+		formatString: $#,##0.00
+		lineageTag: 8f3625eb-648c-44b7-8e50-c232d8dec681
+
+	measure 'Cout IC haut' = MAX(Export_Stats[CoutICHaut])
+		formatString: $#,##0.00
+		lineageTag: b66bccfd-1bea-4107-8cd7-4297ea65b527
+
+	measure 'Service IC bas' = MAX(Export_Stats[ServiceICBas])
+		formatString: 0.00%
+		lineageTag: 497778b9-a8cc-433e-87ff-6fb60cffb300
+
+	measure 'Service IC haut' = MAX(Export_Stats[ServiceICHaut])
+		formatString: 0.00%
+		lineageTag: 5a790431-9e82-4900-a5f0-2d8624ac077b
+
+	measure 'Sensibilite cout' = AVERAGE(Export_Sensibilite[CoutTotal])
+		formatString: $#,##0.00
+		lineageTag: 3b55bf55-14aa-492e-8694-c665f1a37d83
+
+	measure 'Sensibilite service' = AVERAGE(Export_Sensibilite[TauxService])
+		formatString: 0.00%
+		lineageTag: 3ca36980-172e-4ca2-a233-749e57c9666a
+
+	measure 'Sensibilite ruptures' = AVERAGE(Export_Sensibilite[UnitesRupture])
+		formatString: #,##0.0
+		lineageTag: 9a2e1394-098b-48e3-908d-9b426f649491
+
+	measure 'Commandes historiques' = CALCULATE(COUNTROWS(T_Commandes), T_Commandes[Origine] = "DataCo")
+		formatString: #,##0
+		lineageTag: 68bc4366-1bcb-4e46-975d-8ed800824948
+
+	measure 'Delai prevu moyen' = CALCULATE(AVERAGE(T_Commandes[DelaiPrevu]), T_Commandes[Origine] = "DataCo")
+		formatString: 0.00
+		lineageTag: cd67b233-e2f9-44dc-93aa-3014db306214
+
+	measure 'Delai reel moyen' = CALCULATE(AVERAGE(T_Commandes[DelaiReel]), T_Commandes[Origine] = "DataCo")
+		formatString: 0.00
+		lineageTag: 9e8cd347-0f87-4ea7-aa56-b7a6a0132799
+
+	measure 'Livraisons en retard' = DIVIDE(CALCULATE(COUNTROWS(T_Commandes), T_Commandes[Origine] = "DataCo", T_Commandes[StatutLivraison] = "Late delivery"), [Commandes historiques])
+		formatString: 0.00%
+		lineageTag: cd3e811b-7652-4f8b-9155-2981520ac81c
+
+	measure 'Fournisseurs observes' = CALCULATE(DISTINCTCOUNT(T_Commandes[Fournisseur]), T_Commandes[Origine] = "DataCo")
+		formatString: 0
+		lineageTag: a0ef15b3-6081-4adb-9295-c0ae699acacf
+
+	measure 'Ecart moyen au delai prevu' = AVERAGEX(FILTER(T_Commandes, T_Commandes[Origine] = "DataCo" && NOT ISBLANK(T_Commandes[DelaiReel]) && NOT ISBLANK(T_Commandes[DelaiPrevu])), T_Commandes[DelaiReel] - T_Commandes[DelaiPrevu])
+		formatString: 0.00
+		lineageTag: 45594d3e-d062-4b3e-99c9-a689d3d46089
+
+	measure 'Retard positif moyen' = AVERAGEX(FILTER(T_Commandes, T_Commandes[Origine] = "DataCo" && NOT ISBLANK(T_Commandes[DelaiReel]) && NOT ISBLANK(T_Commandes[DelaiPrevu])), MAX(0, T_Commandes[DelaiReel] - T_Commandes[DelaiPrevu]))
+		formatString: 0.00
+		lineageTag: 388b21b5-57e9-4d4c-a46e-7af5fc393bb8
+
+	measure 'Marge moyenne par ligne' = CALCULATE(AVERAGE(T_Commandes[Marge]), T_Commandes[Origine] = "DataCo")
+		formatString: $#,##0.00
+		lineageTag: 6dd2d241-eede-4da3-aed6-0d4cee54eb1a
+
+	measure 'Lignes a marge negative' = DIVIDE(COUNTROWS(FILTER(T_Commandes, T_Commandes[Origine] = "DataCo" && NOT ISBLANK(T_Commandes[Marge]) && T_Commandes[Marge] < 0)), COUNTROWS(FILTER(T_Commandes, T_Commandes[Origine] = "DataCo" && NOT ISBLANK(T_Commandes[Marge]))))
+		formatString: 0.00%
+		lineageTag: f9ecc1fc-096a-44c7-b7a0-9a4357db82cf
+
+	measure 'Produits sous seuil' = COALESCE(COUNTROWS(FILTER(T_Stock, T_Stock[StockCourant] < T_Stock[SeuilAlerte])), 0)
+		formatString: 0
+		lineageTag: f9ef6bb8-c9e2-436c-b4d1-0a9422bbdd7b
+
+	measure 'Approvisionnements en attente' = COALESCE(COUNTROWS(FILTER(T_Approvisionnements, T_Approvisionnements[Statut] IN {"En attente", "En transit", "EnTransit"})), 0)
+		formatString: 0
+		lineageTag: c1a6ad4c-6ec5-4214-9b6c-3c8cc8463837
+
+	column CodeScenario
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 8452998d-a754-4d04-b1f6-22477a1615fc
+		summarizeBy: none
+		sourceColumn: CodeScenario
+
+	column Nom
+		dataType: string
+		lineageTag: 3bee3bb8-8a25-457f-a41c-40b5ae685a22
+		summarizeBy: none
+		sourceColumn: Nom
+
+	column S0
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 3faca899-5f5f-4221-8f75-7ea0b569fc85
+		summarizeBy: none
+		sourceColumn: S0
+
+	column s
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 2958b18f-b12f-4c77-a86b-ff8e9d847956
+		summarizeBy: none
+		sourceColumn: s
+
+	column Q
+		dataType: int64
+		formatString: #,##0
+		lineageTag: 533ddb5b-8839-4d7c-acdf-32fc2c055096
+		summarizeBy: none
+		sourceColumn: Q
+
+	partition Scenarios = m
+		mode: import
+		source =
+				let
+				    Source = Csv.Document(File.Contents(FolderExports & "/Scenarios.csv"), [Delimiter=",", Columns=5, Encoding=65001, QuoteStyle=QuoteStyle.Csv]),
+				    Headers = Table.PromoteHeaders(Source, [PromoteAllScalars=true]),
+				    NonEmpty = Table.SelectRows(Headers, each Record.Field(_, "CodeScenario") <> "" and Record.Field(_, "CodeScenario") <> null),
+				    Nulls = Table.ReplaceValue(NonEmpty, "", null, Replacer.ReplaceValue, Table.ColumnNames(NonEmpty)),
+				    Typed = Table.TransformColumnTypes(Nulls, {{"CodeScenario", Int64.Type}, {"Nom", type text}, {"S0", Int64.Type}, {"s", Int64.Type}, {"Q", Int64.Type}}, "en-US")
+				in Typed
+
+	annotation PBI_NavigationStepName = Navigation
+
+	annotation PBI_ResultType = Table
+
